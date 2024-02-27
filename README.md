@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ⏰ 풀스택 타임어택 - 개인 프로젝트
 
-## Getting Started
+## 배경
 
-First, run the development server:
+당신은 대기업의 신사업개발팀에 풀스택 개발자로 취업하였습니다. 이 대기업은 당근마켓, 중고나라를 참고한 중고거래 서비스의 개발을 고민하고 있습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+신사업개발팀장은 서비스 개발 여부를 최종적으로 결론 짓기에 앞서 일부 필수 기능만 담은 간단한 시제품을 만들어 보기로 결심했습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+패기 넘치는 신입 풀스택 개발자인 당신은 지금부터 20시간 내로 시제품을 만들어 보겠다고 공언했습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+팀장과 기획자는 다음의 요구사항들을 정리하여 당신에게 전달하였습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+⏳ 시작일시: 2024-02-27 10:00 <br>
+⌛️ 종료일시: 2024-02-28 18:00
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 요구사항
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 01. 기술
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Language - `Typescript`
+- Frontend Framework - `Next.js (App Router)`
+- Server Framework - `Nest.js`
+- ORM - `Prisma`
+- Database - `PostgreSQL`
+- Database Cloud - `AWS RDS`
+- Frontend State Management(Optional) - `Redux` or `ContextAPI`
+- Server State Management(Required) - `React Query`
+- Frontend Deployment - `Vercel`
+- Backend Deployment - `Cloudtype`
 
-## Deploy on Vercel
+### 02. 페이지 및 유저 스토리
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **회원 가입 페이지 - `/auth/sign-up` [CSR]**
+   - 사용자는 이메일과 비밀번호로 회원가입을 할 수 있습니다.
+   - 이메일 주소는 유효한 형식이어야 하며 비밀번호는 8자 이상이어야 합니다.
+   - 회원 가입이 완료된 사용자는 유저라고 지칭합니다.
+   - 회원 가입을 완료한 사용자는 이메일과 비밀번호를 사용하여 유저로 로그인할 수 있습니다.
+     - 로그인은 모달 방식으로 구현(가산점)되거나 페이지 방식(기본 점수)으로 구현될 수 있습니다.
+2. **판매글 목록 페이지 - `/` [SSR]**
+   - 사용자와 유저는 판매글을 최신순(기본값), 조회순, 관심순으로 정렬하여 볼 수 있습니다.
+   - 사용자와 유저는 판매글 목록 페이지의 판매글을 눌러 상세 페이지로 이동할 수 있습니다.
+3. **판매글 생성 페이지 - `/deals/create` [CSR]**
+   - 유저는 판매글을 생성할 수 있습니다.
+   - 판매글 작성시에는 판매 상품 이미지, 제목, 내용, 가격, 위치의 다섯 가지 정보가 입력되어야 합니다.
+4. **판매글 상세 페이지 - `/deals/:dealId` [SSR]**
+   - 사용자와 유저는 판매글의 상세 내용을 조회할 수 있습니다.
+   - 유저는 다른 유저의 판매글에 관심을 표하거나 관심을 취소할 수 있습니다.
+   - 판매글을 작성한 유저는 판매글 상세 페이지에서 해당 판매글을 삭제할 수 있습니다.
+5. **판매글 수정 페이지 - `/deals/:dealId/edit` [CSR]**
+   - 판매글을 작성한 유저는 판매글 수정 페이지에 진입하여 판매글을 수정할 수 있습니다.
+6. **내 판매글 페이지 - `/my/deals` [CSR]**
+   - 페이지 내에서 탭 방식으로 아래의 두 개 내용을 볼 수 있습니다.
+     - 유저는 자신이 작성한 판매글들의 목록을 볼 수 있습니다.
+     - 유저는 자신이 관심을 표한 판매글들의 목록을 볼 수 있습니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 03. 그 외 필수 요구사항
+
+- API는 RESTful 해야 합니다.
+- 인증은 JWT을 Bearer Token으로 사용하여 구현하며 토큰은 발급일시 기준 2시간 뒤 만료되어야 합니다.
+- API 서버로부터의 모든 응답은 다음의 JSON 형태여야 합니다.
+  ```tsx
+  {
+  	"success": boolean,
+  	"result": T,
+  	"message": string
+  }
+  ```
