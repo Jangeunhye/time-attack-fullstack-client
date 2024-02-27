@@ -1,48 +1,73 @@
 "use client";
 
-import API from "@/api";
-import { useRouter } from "next/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
+import api from "@/api";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type AuthContext = {
   isLoggedIn: boolean;
-  logIn: () => void;
-  logOut: () => void;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+  isAuthInitialized: boolean;
+  setIsAuthInitialized: Dispatch<SetStateAction<boolean>>;
 };
 
-const initialValue: AuthContext = {
+const AuthContext = createContext<AuthContext>({
   isLoggedIn: false,
-  logIn: () => {},
-  logOut: () => {},
-};
+  setIsLoggedIn: () => {},
+  isAuthInitialized: false,
+  setIsAuthInitialized: () => {},
+});
 
-const AuthContext = createContext<AuthContext>(initialValue);
+export const useAuth = () => useContext(AuthContext);
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  const logIn = () => {
-    setIsLoggedIn(true);
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const value = {
+    isLoggedIn,
+    setIsLoggedIn,
+    isAuthInitialized,
+    setIsAuthInitialized,
   };
 
-  const logOut = () => {
-    setIsLoggedIn(false);
-  };
-
-  const refreshToken = async () => {
-    const response = await API.auth.refreshToken();
-
-    if (response) {
-      logIn();
-    }
-  };
-
-  useEffect(() => {
-    refreshToken();
-  }, []);
-
-  const value: AuthContext = { isLoggedIn, logIn, logOut };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export const useAuth = () => useContext(AuthContext);
+export function Authenticated({ children }: { children: React.ReactNode }) {
+  const { isAuthInitialized, setIsAuthInitialized, setIsLoggedIn } = useAuth();
+
+  const { data: isAccessTokenRefreshed, isFetched } = useQuery({
+    queryFn: api.auth.refreshToken,
+    queryKey: ["authentication"],
+    refetchInterval: 1000 * 60 * 19,
+    staleTime: 1000 * 60 * 19.5,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchIntervalInBackground: true,
+  });
+
+  useEffect(() => {
+    if (isFetched) {
+      setIsAuthInitialized(true);
+    }
+  }, [isFetched, setIsAuthInitialized]);
+
+  useEffect(() => {
+    if (isAccessTokenRefreshed) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [isAccessTokenRefreshed, setIsLoggedIn]);
+
+  if (!isAuthInitialized) return null;
+
+  return children;
+}

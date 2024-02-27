@@ -27,7 +27,7 @@ function SignUpPage() {
 
     try {
       await signUp({ email, password });
-      auth.logIn();
+      auth.setIsLoggedIn(true);
     } catch (e) {
       alert("회원가입에 실패하였습니다.");
     }
