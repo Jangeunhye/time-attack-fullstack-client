@@ -3,6 +3,7 @@ import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
 import { useId } from "react";
+import UploadImage from "../../_components/UploadImage";
 
 function DealsCreate() {
   const textareaId = useId();
@@ -12,7 +13,7 @@ function DealsCreate() {
       <Heading>판매글 작성하기</Heading>
       <section className=" flex flex-col gap-y-6">
         <Input label="글 제목" type="text" height="createInput" />
-        <input type="file" id={fileId} />
+        <UploadImage />
         <div className="flex flex-col items-center ">
           <label htmlFor={textareaId} className="self-start">
             글 내용
