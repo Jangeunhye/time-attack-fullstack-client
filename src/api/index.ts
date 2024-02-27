@@ -6,5 +6,5 @@ export const client = axios.create({
   withCredentials: true,
 });
 
-const api = { auth: authAPI };
-export default api;
+const API = { auth: authAPI };
+export default API;

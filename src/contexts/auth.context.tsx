@@ -1,7 +1,8 @@
 "use client";
 
+import API from "@/api";
 import { useRouter } from "next/navigation";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContext = {
   isLoggedIn: boolean;
@@ -27,6 +28,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logOut = () => {
     setIsLoggedIn(false);
   };
+
+  const refreshToken = async () => {
+    const response = await API.auth.refreshToken();
+
+    if (response) {
+      logIn();
+    }
+  };
+
+  useEffect(() => {
+    refreshToken();
+  }, []);
 
   const value: AuthContext = { isLoggedIn, logIn, logOut };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

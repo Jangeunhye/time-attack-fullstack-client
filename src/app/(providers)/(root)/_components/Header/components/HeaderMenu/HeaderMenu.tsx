@@ -1,5 +1,6 @@
 "use client";
 
+import API from "@/api";
 import { useAuth } from "@/contexts/auth.context";
 import { useModal } from "@/contexts/modal.context";
 import Link from "next/link";
@@ -11,7 +12,8 @@ function HeaderMenu() {
   const router = useRouter();
   const modal = useModal();
 
-  const handleClickLogOut = () => {
+  const handleClickLogOut = async () => {
+    await API.auth.logOut();
     auth.logOut();
     router.push("/");
   };
