@@ -7,11 +7,15 @@ async function signUp(dto: SignUpDto) {
 }
 
 async function logIn(dto: LogInDto) {
-  await client.post<Response>("/auth/log-in", dto);
+  const response = await client.post<Response>("/auth/log-in", dto);
+  const accessToken = response.data.result;
+  if (!accessToken) throw new Error("fail signup");
+  client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  console.log(client.defaults.headers.common.Authorization);
 }
 
 async function logOut() {
-  await client.delete<Response>(`/auth/log-out`);
+  client.defaults.headers.common.Authorization = "";
 }
 async function refreshToken() {
   const response = await client.get<Response<boolean>>(`/auth/refresh-token`);
@@ -25,7 +29,7 @@ const authAPI = {
   signUp,
   logIn,
   logOut,
-  refreshToken,
+  // refreshToken,
 };
 
 export default authAPI;

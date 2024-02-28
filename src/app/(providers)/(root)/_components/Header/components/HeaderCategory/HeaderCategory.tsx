@@ -1,5 +1,5 @@
 "use client";
-import { Authenticated, useAuth } from "@/contexts/auth.context";
+import { useAuth } from "@/contexts/auth.context";
 import { useModal } from "@/contexts/modal.context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,24 +16,22 @@ function HeaderCategory() {
     }
   };
   return (
-    <Authenticated>
-      <ul className="text-[15px] font-medium flex gap-4">
-        <li>
-          <Link href="/">구입하기</Link>
-        </li>
-        <li>
-          <Link
-            href={auth.isLoggedIn ? "/deals/create" : "/"}
-            onClick={handleClickDealCreate}
-          >
-            판매하기
-          </Link>
-        </li>
-        <li>
-          <Link href="/my/deals">내 판매글</Link>
-        </li>
-      </ul>
-    </Authenticated>
+    <ul className="text-[15px] font-medium flex gap-4">
+      <li>
+        <Link href="/">구입하기</Link>
+      </li>
+      <li>
+        <Link
+          href={auth.isLoggedIn ? "/deals/create" : "/"}
+          onClick={handleClickDealCreate}
+        >
+          판매하기
+        </Link>
+      </li>
+      <li>
+        <Link href="/my/deals">내 판매글</Link>
+      </li>
+    </ul>
   );
 }
 

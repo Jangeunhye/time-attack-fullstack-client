@@ -5,7 +5,6 @@ import { Deal } from "./deal.dto";
 const getDeals = async () => {
   const response = await client.get<Response<Deal[]>>("/");
   const data = response.data;
-
   if (!data.success) throw new Error(data.error.message);
   const deals = data.result;
   return deals;
