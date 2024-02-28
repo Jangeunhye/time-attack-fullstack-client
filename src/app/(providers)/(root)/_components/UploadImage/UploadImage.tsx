@@ -1,35 +1,30 @@
 "use client";
 import { client } from "@/api";
-import { useState } from "react";
 
-function UploadImage() {
-  const [image, setImage] = useState<any>();
-
+function UploadImage({ images, setImages }) {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // const imageList = event.target.files;
-    // let imageUrlList = [...images];
-    const selectedImage = event.target!.files![0];
+    const newImages = [...images];
 
-    setImage(selectedImage);
+    for (let i = 0; i < event.target.files!.length; i++) {
+      const file = event.target.files![i];
+      // 이미지 파일 3개로 제한
+      if (newImages.length < 3) {
+        // 이벤트객체의 파일을 newImages에 담기
 
-    // for (let i = 0; i < imageList!.length; i++) {
-    //   const currentImageUrl = URL.createObjectURL(imageList![i]);
-    //   imageUrlList.push(currentImageUrl);
-    // }
-    // if (imageUrlList.length > 3) {
-    //   imageUrlList = imageUrlList.slice(0, 3);
-    // }
-    // setImages(imageUrlList);
+        newImages.push(file);
+      }
+    }
+    setImages(newImages);
   };
 
   const handleUpload = async () => {
     try {
       const formData = new FormData();
-      //   for (const image of images) {
-      //     formData.append("file", String(image));
-      //   }
+      for (const image of images) {
+        formData.append("file", String(image));
+      }
 
-      formData.append("file", image);
+      formData.append("post", images);
 
       await client.post<Response>("/upload", formData, {
         headers: {
