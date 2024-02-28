@@ -4,8 +4,7 @@ import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
-import { useId, useState } from "react";
-import UploadImage from "../../_components/UploadImage";
+import { ChangeEventHandler, useId, useState } from "react";
 
 function DealsCreate() {
   const textareaId = useId();
@@ -13,14 +12,12 @@ function DealsCreate() {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState<number>(0);
   const [location, setLocation] = useState("");
-  const [images, setImages] = useState<any>([]);
+  const [image, setImage] = useState<any>();
 
   const handleUpload = async () => {
     try {
       const formData = new FormData();
-      for (const image of images) {
-        formData.append("files", image);
-      }
+
       formData.append(
         "post",
         JSON.stringify({
@@ -31,7 +28,9 @@ function DealsCreate() {
         })
       );
 
-      await client.post<Response>("/upload", formData, {
+      formData.append("image", image);
+
+      await client.post<Response>("/deals/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -41,11 +40,24 @@ function DealsCreate() {
       console.error("업로드 실패", e);
     }
   };
+  const handleImageChange: ChangeEventHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const image = event.target.files![0];
+
+    setImage(image);
+  };
   return (
     <Page>
       <Heading>판매글 작성하기</Heading>
-      <UploadImage images={images} setImages={setImages} />
-
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+        />
+      </div>
       <section className=" flex flex-col gap-y-6">
         <Input
           label="글 제목"
