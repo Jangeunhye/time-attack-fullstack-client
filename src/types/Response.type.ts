@@ -4,4 +4,10 @@ export type Response<D = null> =
       result: D;
       error: null;
     }
-  | { success: false; result: null; error: { message: string } };
+  | {
+      success: false;
+      result: null;
+      error: {
+        message: string;
+      };
+    };

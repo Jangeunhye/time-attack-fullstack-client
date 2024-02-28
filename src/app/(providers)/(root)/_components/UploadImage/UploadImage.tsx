@@ -26,7 +26,7 @@ function UploadImage({ images, setImages }) {
 
       formData.append("post", images);
 
-      await client.post<Response>("/upload", formData, {
+      await client.post<Response>("/deals/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -45,7 +45,6 @@ function UploadImage({ images, setImages }) {
         multiple
         onChange={handleImageChange}
       />
-      <button onClick={handleUpload}> 업로드</button>
     </div>
   );
 }

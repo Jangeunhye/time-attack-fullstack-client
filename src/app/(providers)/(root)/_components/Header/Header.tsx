@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeaderCategory from "./components/HeaderCategory";
 import HeaderMenu from "./components/HeaderMenu";
 
 function Header() {
@@ -8,17 +9,7 @@ function Header() {
         중고마켓
       </Link>
       <nav className="ml-20 flex flex-1">
-        <ul className="text-[15px] font-medium flex gap-4">
-          <li>
-            <Link href="/">구입하기</Link>
-          </li>
-          <li>
-            <Link href="/deals/create">판매하기</Link>
-          </li>
-          <li>
-            <Link href="/my/deals">내 판매글</Link>
-          </li>
-        </ul>
+        <HeaderCategory />
         <HeaderMenu />
       </nav>
     </header>
