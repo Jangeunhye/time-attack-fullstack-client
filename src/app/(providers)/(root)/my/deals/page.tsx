@@ -1,4 +1,7 @@
 function MyDealPage() {
-  return <></>;
+  // const { data } = useQueryGetDeals();
+  // console.log(data);
+
+  return <>MyDeal</>;
 }
 export default MyDealPage;

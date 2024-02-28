@@ -4,13 +4,17 @@ import Button from "@/components/Button";
 import Heading from "@/components/Heading";
 import Input from "@/components/Input";
 import Page from "@/components/Page";
+import { Response } from "@/types/Response.type";
+import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useId, useState } from "react";
 
 function DealsCreate() {
+  const route = useRouter();
+
   const textareaId = useId();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number>();
   const [location, setLocation] = useState("");
   const [image, setImage] = useState<any>();
 
@@ -30,14 +34,18 @@ function DealsCreate() {
 
       formData.append("image", image);
 
-      await client.post<Response>("/deals/create", formData, {
+      const response = await client.post<Response>("/deals/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("업로드 성공");
+
+      if (!response.data.success) {
+        throw new Error("업로드실패");
+      }
+      route.replace("/");
     } catch (e) {
-      console.error("업로드 실패", e);
+      console.error(e);
     }
   };
   const handleImageChange: ChangeEventHandler = (
@@ -51,12 +59,7 @@ function DealsCreate() {
     <Page>
       <Heading>판매글 작성하기</Heading>
       <div>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageChange}
-        />
+        <input type="file" accept="image/*" onChange={handleImageChange} />
       </div>
       <section className=" flex flex-col gap-y-6">
         <Input
