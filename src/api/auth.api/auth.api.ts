@@ -11,14 +11,18 @@ async function logIn(dto: LogInDto) {
   const accessToken = response.data.result;
   if (!accessToken) throw new Error("fail signup");
   client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-  console.log(client.defaults.headers.common.Authorization);
+  localStorage.setItem("accessToken", accessToken);
+
+  return accessToken;
 }
 
 async function logOut() {
   client.defaults.headers.common.Authorization = "";
+  localStorage.removeItem("accessToken");
 }
+
 async function refreshToken() {
-  const response = await client.get<Response<boolean>>(`/auth/refresh-token`);
+  const response = await client.get<Response>(`/auth/refresh-token`);
   const data = response.data;
   if (!data.success) throw new Error(data.error.message);
 
@@ -29,7 +33,7 @@ const authAPI = {
   signUp,
   logIn,
   logOut,
-  // refreshToken,
+  refreshToken,
 };
 
 export default authAPI;

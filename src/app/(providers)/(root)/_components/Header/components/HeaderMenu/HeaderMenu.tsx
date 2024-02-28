@@ -21,6 +21,11 @@ function HeaderMenu() {
   const handleClickLogIn = () => {
     modal.open(<LogInModal />);
   };
+
+  if (!auth.isAuthInitialized) {
+    return null;
+  }
+
   return (
     <div className="ml-auto flex items-center gap-x-4">
       {auth.isLoggedIn ? (

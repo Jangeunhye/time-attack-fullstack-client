@@ -23,7 +23,7 @@ function DealsCreate() {
       const formData = new FormData();
 
       formData.append(
-        "post",
+        "deal",
         JSON.stringify({
           title,
           content,

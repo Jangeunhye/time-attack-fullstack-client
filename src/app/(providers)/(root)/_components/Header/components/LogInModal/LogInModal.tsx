@@ -26,7 +26,15 @@ function LogInModal() {
 
     try {
       await logIn({ email, password });
+
+      // 1. Axios의 헤더에 토큰 넣기 -
+      // client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+      //2. Context안에 들어있는 isLoggedIn 값을 true로변경
       auth.setIsLoggedIn(true);
+      // 3. localStorage
+      // localStorage.setItem("accessToken", accessToken);
+
       router.push("/");
       modal.close();
     } catch (e) {

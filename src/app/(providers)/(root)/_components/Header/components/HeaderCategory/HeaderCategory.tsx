@@ -29,7 +29,12 @@ function HeaderCategory() {
         </Link>
       </li>
       <li>
-        <Link href="/my/deals">내 판매글</Link>
+        <Link
+          href={auth.isLoggedIn ? "/my/deals" : "/"}
+          onClick={handleClickDealCreate}
+        >
+          내 판매글
+        </Link>
       </li>
     </ul>
   );

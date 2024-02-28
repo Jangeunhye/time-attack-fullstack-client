@@ -14,3 +14,19 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: 300, 500, 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SejonghospitalBold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SejonghospitalBold.woff2")
+    format("woff2");
+  font-weight: 300, 700;
+  font-style: normal;
+}
