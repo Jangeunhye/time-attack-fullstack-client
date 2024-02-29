@@ -16,7 +16,7 @@ function HeaderCategory() {
     }
   };
   return (
-    <ul className="text-[15px] font-medium flex gap-4">
+    <ul className="text-[15px] font-medium flex gap-4 ">
       <li>
         <Link href="/">구입하기</Link>
       </li>

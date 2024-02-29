@@ -11,7 +11,7 @@ function Button({
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
-      className="border border-slate-700 py-4 px-12 text-[15px] font-semibold bg-white transition hover:-translate-y-1 active:translate-y-0 hover:drop-shadow w-full data-[color=black]:bg-black data-[color=black]:text-white mt-3"
+      className="border bg-[#2b1e8e] text-white rounded-lg py-4 px-12 text-[15px] font-semibold transition hover:-translate-y-1 active:translate-y-0 hover:drop-shadow w-full  mt-3 hover:opacity-80"
       data-color={color}
       {...props}
     >

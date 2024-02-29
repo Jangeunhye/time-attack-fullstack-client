@@ -29,11 +29,21 @@ async function refreshToken() {
   const isAccessTokenRefreshed = data.result;
   return isAccessTokenRefreshed;
 }
+
+async function checkLoggedIn(dealId: number) {
+  const response = await client.post<Response>(`/check-login/${dealId}`);
+  const data = response.data;
+  if (!data.success) throw new Error(data.error.message);
+  const verified = data.result;
+  return verified;
+}
+
 const authAPI = {
   signUp,
   logIn,
   logOut,
   refreshToken,
+  checkLoggedIn,
 };
 
 export default authAPI;
