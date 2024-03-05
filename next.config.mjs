@@ -4,8 +4,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
         hostname: "localhost",
+      },
+      {
+        hostname:
+          "port-0-time-attack-fullstack-server-am952nltdolbtm.sel5.cloudtype.app",
       },
     ],
   },

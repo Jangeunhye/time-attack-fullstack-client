@@ -7,7 +7,7 @@ function DetailDealCard({ deal }: { deal: Deal }) {
     <section className=" mx-auto w-[750px]">
       <div className="relative overflow-hidden rounded-xl w-[750px] h-[750px] mx-auto font-light shadow-xl">
         <Image
-          src={`http://localhost:5050/images/${deal.imageUrl}`}
+          src={`https://port-0-time-attack-fullstack-server-am952nltdolbtm.sel5.cloudtype.app/images/${deal.imageUrl}`}
           alt="dealImage"
           layout="fill"
           objectFit="cover"

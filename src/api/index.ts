@@ -6,7 +6,8 @@ const accessToken =
   typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 
 export const client = axios.create({
-  baseURL: "http://localhost:5050",
+  baseURL:
+    "https://port-0-time-attack-fullstack-server-am952nltdolbtm.sel5.cloudtype.app",
   withCredentials: true,
   headers: {
     Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
