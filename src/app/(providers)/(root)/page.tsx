@@ -12,3 +12,5 @@ export default async function HomePage() {
     </Page>
   );
 }
+
+export const revalidate = 5;
